@@ -1,1 +1,73 @@
-去微软推哦怕【】
+/*本关任务：消除类游戏是一种益智游戏，其核心规则是将一定的彼此相邻的相同元素配对消除。现给定一个n行m列的棋盘，棋盘中的每一个方格上放着一个棋子，每个棋子都有颜色，编号用1~9表示。当一行或一列上有连续3个或3个以上同色棋子时，这些棋子都被同时消除，对应的方格用0表示，请输出经过消除后的棋盘。例如，给定棋盘为：
+4 4 3 1 4
+3 1 1 1 1
+4 3 4 1 2
+4 4 2 2 2
+消除后为：
+4 4 3 0 4
+3 0 0 0 0
+4 3 4 0 2
+4 4 0 0 0*/
+#include <stdio.h>
+#include <stdbool.h>
+
+void eliminate(int board[10][10], int n, int m) {
+    
+    int b[10][10]={0};
+    
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m - 2; j++) {
+                if (board[i][j] == board[i][j + 1] && board[i][j + 1] == board[i][j + 2]&& board[i][j] != 0) {
+                    b[i][j] = b[i][j + 1] = b[i][j + 2] = 1;
+                    
+                    
+                }
+            }
+        }
+        
+        for (int j = 0; j < m; j++) {
+            for (int i = 0; i < n - 2; i++) {
+                if (board[i][j] == board[i + 1][j] && board[i + 1][j] == board[i + 2][j]&& board[i][j] != 0) {
+                    b[i][j] = b[i+1][j] = b[i+2][j] = 1;
+                    
+                }
+            }
+        }
+   
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+        if(b[i][j]==1)
+        {
+            board[i][j]=0;
+        }
+        }
+    }
+}
+
+int main() {
+    int n, m, i, j;
+    int board[10][10], result[10][10];
+
+    scanf("%d%d", &n, &m);
+    for (i = 0; i < n; i++)
+        for (j = 0; j < m; j++)
+            scanf("%d", &board[i][j]);
+
+
+    for (i = 0; i < n; i++)
+        for (j = 0; j < m; j++)
+            result[i][j] = board[i][j];
+
+    eliminate(result, n, m);
+
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
